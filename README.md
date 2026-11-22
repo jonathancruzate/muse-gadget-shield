@@ -1792,3 +1792,7 @@ export (0 differing px); apksigner verify passed; build desktop checks
 pass. APK: muse-gadget-shield-prototype.apk, SHA-256 `4952eae1431c94b038ec34c3083d0616bbda1dca9343e8b6c7963eacfdd86ace`.
 Not installed by this handling (Shield install is a deliberate step);
 ready to install.
+
+## Screenshots
+
+![Muse Gadget for Shield TV main screen on the Shield TV](docs/screenshots/gadget-shield-main.jpg)
