@@ -1793,6 +1793,37 @@ pass. APK: muse-gadget-shield-prototype.apk, SHA-256 `4952eae1431c94b038ec34c308
 Not installed by this handling (Shield install is a deliberate step);
 ready to install.
 
-## Screenshots
+**Installed 2026-11-21 23:35 EST** at Jonathan's direct order:
+`install -r` over v0.11.2 (vc29) via the tailnet lane (127.0.0.1:5556).
+On-device read-back: versionName 0.11.4 / versionCode 31. MainActivity
+relaunched after install; GadgetService foreground; logcat confirms
+`Link session registered as homelink-fa76f8` and fetch_vms HTTP 200. The
+installed base.apk pulled back from the device is hash-identical to the
+staged APK above, and its tv_banner resources are pixel-identical
+(0 differing px) to the revised no-tile export.
 
-![Muse Gadget for Shield TV main screen on the Shield TV](docs/screenshots/gadget-shield-main.jpg)
+## v0.11.5 (2026-11-21) — TV banner final layout: small logo + name on one line
+
+Banner-only release (versionCode 32). Jonathan's photo of the live TV
+launcher (2026-11-21 23:37 EST) showed the no-tile banner's mark and
+two-line name read oversized next to the other channel banners, so the
+banner layout was finalized as: a SMALL logo (M + teal TV badge) on the
+left, the app name on the right on ONE line, no tagline. Banner text was
+then shortened to just "Muse Gadget" (Jonathan's order 23:39 EST; the
+app/launcher name stays Muse Gadget for Shield TV — banner art only).
+tv_banner.png (320x180, drawable + drawable-xhdpi) replaced with the
+final export from `~/workspace/muse-app-logos/banners/`
+(banner-muse-gadget-shield-320x180.png). Verified: banner extracted from
+the built APK (both drawable entries) is pixel-identical to the final
+export (0 differing px); apksigner verify passed (v2 + v3); build
+desktop checks pass. APK: muse-gadget-shield-prototype.apk, SHA-256
+`954b884170e2b3f63faaca90529d4517c04e434d01a404f1a457dd3345fddbb9`.
+
+**Installed 2026-11-21 23:52 EST** at Jonathan's direction:
+`install -r` over v0.11.4 (vc31) via the tailnet lane (127.0.0.1:5556).
+On-device read-back: versionName 0.11.5 / versionCode 32. MainActivity
+relaunched after install; GadgetService foreground; logcat confirms
+`Link session registered as homelink-fa76f8` and fetch_vms HTTP 200.
+The installed base.apk pulled back from the device is hash-identical to
+the staged APK above, so its tv_banner resources are the final export
+byte-for-byte. HOME sent at the end of the install handling.
