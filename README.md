@@ -1865,3 +1865,39 @@ after install; GadgetService foreground; logcat confirms
 `Link session registered as homelink-fa76f8`. The installed base.apk
 pulled back from the device is hash-identical to the staged APK above.
 HOME sent at the end of the install handling.
+
+## v0.11.7 (2026-11-22) — TV banner rollback: adaptive wrapper removed (bitmap banner restored)
+
+The v0.11.6 template adoption made `android:banner` resolve to the
+`drawable-anydpi-v26/tv_banner.xml` `<adaptive-icon>` on API 26+. On
+the Shield, Projectivy renders an adaptive banner drawable with the
+AdaptiveIconDrawable safe-zone crop: agy's measured consult
+(`~/workspace/muse-app-logos/agy-banner-consult/agy-report.md`) found
+an isotropic ~1.50x center-zoom losing ~16.7% on every edge (only the
+center ~66.7% visible), clipping the M's left peak and truncating the
+name in Projectivy's favorites row, while the stock launcher and the
+pre-adoption flat-PNG banners rendered uncropped in the identical
+slot. Root-cause fix, artwork unchanged: the anydpi-v26 banner XML
+and its `tv_banner_foreground` / `tv_banner_background` layers are
+deleted; `android:banner` again resolves to the plain bitmap ladder
+(drawable-mdpi/hdpi/xhdpi/xxhdpi/xxxhdpi + unqualified drawable,
+all pixel-identical to the `~/workspace/muse-app-logos/banners/`
+exports, 0 differing px). The launcher adaptive icons
+(mipmap-anydpi-v26) are untouched.
+
+Verified: aapt2 badging shows the application + leanback banner
+resolving to `res/drawable-mdpi-v4/tv_banner.png` (a bitmap, not the
+anydpi XML); apksigner verify passed (v2 + v3); build desktop checks
+pass. APK: muse-gadget-shield-prototype.apk, SHA-256
+`5b3ff18e3b96a38d0900a8b54c4dcfb4f3298359622f42f51807736c04f4eb4b`.
+
+**Installed 2026-11-22**: `install -r` over v0.11.6 (vc33) via the
+tailnet lane (127.0.0.1:5556). On-device read-back: versionName
+0.11.7 / versionCode 34; installed base.apk hash-identical to the
+staged APK. Rendering verified on the TV after a `pm trim-caches` +
+reboot cycle (Projectivy's favorites-row card cache): the focused
+"Muse Gadget" card now shows the complete M, badge, and name with
+margins, focused and unfocused
+(`~/workspace/muse-app-logos/banner-fix-2026-11-22/bitmap-fix-gadget-focused.png`).
+GadgetService relaunched after the reboot; logcat confirms
+`Link session registered as homelink-fa76f8`.
