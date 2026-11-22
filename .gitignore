@@ -1,0 +1,4 @@
+hidden_files/
+*.log
+app/build/
+tests/classes/

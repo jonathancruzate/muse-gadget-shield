@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jonathancruzate.musegadgetshield"
+    android:versionCode="30"
+    android:versionName="0.11.3">
+
+    <uses-sdk
+        android:minSdkVersion="26"
+        android:targetSdkVersion="30" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <!-- USB host for the living-room board lane (v0.10.0); not
+         required, so the app still installs where no host port is
+         usable — the lane simply stays inert. -->
+    <uses-feature
+        android:name="android.hardware.usb.host"
+        android:required="false" />
+
+    <application
+        android:allowBackup="false"
+        android:banner="@drawable/tv_banner"
+        android:debuggable="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
+
+        <activity
+            android:name=".MainActivity"
+            android:banner="@drawable/tv_banner"
+            android:exported="true"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Living-room board attach (v0.10.0): plugging the
+                 board in can surface the app; BoardLink (owned by
+                 GadgetService, started from onCreate below) does the
+                 permission/open work. -->
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/device_filter" />
+        </activity>
+
+        <activity
+            android:name=".VoiceActivity"
+            android:exported="true"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
+            android:label="Muse voice"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape" />
+
+        <service
+            android:name=".GadgetService"
+            android:exported="true"
+            android:foregroundServiceType="connectedDevice" />
+
+        <!-- Default-assistant stack (v0.7.0): holding the
+             voice-interaction role is the ONLY way to own the
+             remote's mic button on this build — the press produces
+             no accessibility key event (proven 2026-11-09); the
+             system routes it to the role holder. Jonathan's
+             decision: Muse Gadget holds the role, so the button
+             opens MuseVoiceSession and Google Assistant is never
+             invoked. -->
+        <service
+            android:name=".MuseVoiceInteractionService"
+            android:exported="true"
+            android:label="Muse"
+            android:permission="android.permission.BIND_VOICE_INTERACTION">
+            <intent-filter>
+                <action android:name="android.service.voice.VoiceInteractionService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.voice_interaction"
+                android:resource="@xml/voice_interaction" />
+        </service>
+
+        <service
+            android:name=".MuseVoiceSessionService"
+            android:exported="true"
+            android:permission="android.permission.BIND_VOICE_INTERACTION" />
+
+        <!-- Manifest satisfier only — never the system's
+             recognition service (that stays Katniss's). See
+             StubRecognitionService. -->
+        <service
+            android:name=".StubRecognitionService"
+            android:exported="true"
+            android:label="Muse Gadget recognition (stub)">
+            <intent-filter>
+                <action android:name="android.speech.RecognitionService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data
+                android:name="android.speech"
+                android:resource="@xml/recognition_service" />
+        </service>
+
+        <!-- Keycode voice trigger (v0.6.0): consumes the remote's
+             voice keys ahead of the system and opens voice mode,
+             so Google Assistant never pops up for them. -->
+        <service
+            android:name=".KeyTriggerService"
+            android:exported="true"
+            android:label="Muse Gadget voice trigger"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/key_trigger_service" />
+        </service>
+    </application>
+</manifest>
