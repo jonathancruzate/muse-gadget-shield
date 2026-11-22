@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- USB device filter for the living-room board (v0.10.0).
+     Primary entry: the ESP32 native-USB vendor id 0x303A (12346).
+     The CDC entries cover a board enumerating generically as a CDC
+     communications (class 2) device. BoardLink.isBoardDevice applies
+     the same acceptance rules in code and is authoritative — this
+     filter only controls which attach events can launch the app. -->
+<resources>
+    <usb-device vendor-id="12346" />
+    <usb-device class="2" />
+</resources>

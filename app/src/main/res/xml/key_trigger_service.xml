@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  KeyTriggerService configuration (v0.6.0). The one capability that
+  matters here is key-event filtering: flagRequestFilterKeyEvents +
+  canRequestFilterKeyEvents route remote key presses through
+  KeyTriggerService.onKeyEvent, where the voice keys (ASSIST /
+  VOICE_ASSIST / SEARCH) are consumed on ACTION_DOWN and turned into
+  a VoiceActivity launch — so Google Assistant never opens for them.
+  Window-content retrieval stays off; the service reads no screen
+  content and observes no accessibility events (typeAllMask is set
+  only because a service must declare some event surface; the code
+  ignores every event it receives).
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeAllMask"
+    android:accessibilityFlags="flagRequestFilterKeyEvents"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:canRequestFilterKeyEvents="true"
+    android:canRetrieveWindowContent="false"
+    android:description="@string/key_trigger_description"
+    android:notificationTimeout="100" />

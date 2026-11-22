@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  White rounded-square chip behind the Muse logo mark, mirroring the
+  Muse app icon's own presentation (white background, gradient mark).
+  Plain UI chrome; the mark itself is @drawable/muse_logo.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="18dp" />
+    <solid android:color="#ffffff" />
+</shape>

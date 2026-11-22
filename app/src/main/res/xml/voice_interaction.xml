@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Voice-interaction meta-data for MuseVoiceInteractionService
+  (v0.7.0). sessionService runs the avatar voice plate;
+  recognitionService names StubRecognitionService ONLY to satisfy
+  the format — the system's actual recognition service
+  (Settings.Secure voice_recognition_service) stays Katniss's,
+  which is the lane the app listens through. See
+  StubRecognitionService's javadoc.
+-->
+<voice-interaction-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:sessionService="com.jonathancruzate.musegadgetshield.MuseVoiceSessionService"
+    android:recognitionService="com.jonathancruzate.musegadgetshield.StubRecognitionService"
+    android:supportsAssist="true"
+    android:supportsLaunchVoiceAssistFromKeyguard="false" />

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Recognition-service meta-data for StubRecognitionService
+  (v0.7.0). Intentionally minimal: the stub exists only so the
+  voice-interaction meta-data can name an in-package recognition
+  service. It is never meant to be selected as the system's
+  recognition service — Katniss's is, and must remain so.
+-->
+<recognition-service xmlns:android="http://schemas.android.com/apk/res/android" />

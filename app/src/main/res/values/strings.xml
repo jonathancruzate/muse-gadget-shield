@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Muse Gadget for Shield TV</string>
+    <string name="key_trigger_description">Turns the Shield remote\'s microphone button into the Muse Gadget voice-mode trigger: pressing it opens Muse voice mode on the TV instead of Google Assistant. Reads no screen content.</string>
+</resources>
