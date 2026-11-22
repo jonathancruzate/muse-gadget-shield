@@ -1827,3 +1827,41 @@ relaunched after install; GadgetService foreground; logcat confirms
 The installed base.apk pulled back from the device is hash-identical to
 the staged APK above, so its tv_banner resources are the final export
 byte-for-byte. HOME sent at the end of the install handling.
+
+## v0.11.6 (2026-11-22) — TV banner adopts the Google TV template packaging
+
+Banner-packaging-only release (versionCode 33), at Jonathan's order
+("Adopt", 2026-11-22 00:15 EST) after the gap analysis against the
+official Google TV Figma template (@tv, "TV App Icon Template
+[Android TV & Google TV]"). The banner art is unchanged (final layout:
+small logo left, "Muse Gadget" on one line); what changed is the
+resource structure, now the template's:
+
+- Legacy ladder: `tv_banner.png` in drawable-mdpi (160x90), drawable-hdpi
+  (240x135), drawable-xhdpi (320x180), drawable-xxhdpi (480x270) and
+  drawable-xxxhdpi (640x360), plus the kept unqualified drawable copy.
+- Adaptive set: `drawable-anydpi-v26/tv_banner.xml` (`<adaptive-icon>`
+  with `@drawable/tv_banner_background` — solid #F0F2F5 — and
+  `@drawable/tv_banner_foreground` — logo + name on transparent, both
+  in drawable-xxxhdpi). minSdk is 26, so the adaptive banner is the
+  resolved banner on the Shield (API 30); the flat PNGs remain the
+  fallback for pre-26 / non-adaptive launchers.
+
+Exports come from `~/workspace/muse-app-logos/build_banners.py`, which
+now emits the full set from the same composition (fg-over-bg verified
+to reproduce the master exactly). Verified: every banner entry
+extracted from the built APK is pixel-identical to its export
+(0 differing px, all sizes + both layers); aapt2 badging shows the
+application banner resolving to `res/drawable-anydpi-v26/tv_banner.xml`;
+apksigner verify passed (v2 + v3); build desktop checks pass
+(SELFTEST + FETCHVMS PARSE + DESKTOP CHECKS PASS). APK:
+muse-gadget-shield-prototype.apk, SHA-256
+`36a87541a9ca8b92e501b1f91fd19bf421f2d14d183ac1c3298dedc0d5e1288a`.
+
+**Installed 2026-11-22** at Jonathan's direction: `install -r` over
+v0.11.5 (vc32) via the tailnet lane (127.0.0.1:5556). On-device
+read-back: versionName 0.11.6 / versionCode 33. MainActivity relaunched
+after install; GadgetService foreground; logcat confirms
+`Link session registered as homelink-fa76f8`. The installed base.apk
+pulled back from the device is hash-identical to the staged APK above.
+HOME sent at the end of the install handling.
