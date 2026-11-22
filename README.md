@@ -1777,3 +1777,18 @@ the built APK are pixel-identical to the approved art/exports; build
 desktop checks pass. APK: muse-gadget-shield-prototype.apk, SHA-256 `d8f691ce0f54ffc3ffc6f98016b1b3c7f93150280fb96c89c67d37cb2a5c0962`.
 Not installed by this handling (Shield install is a deliberate step);
 ready to install.
+
+## v0.11.4 (2026-11-21) — TV banner revision: no icon tile
+
+Banner-only release (versionCode 31). At Jonathan's order (2026-11-21
+23:21 EST), the Android TV channel banner no longer shows the app icon
+tile/board: the banner is a solid light background (#F0F2F5) with the
+original Muse M and the teal TV badge directly on it, full app name in
+art. tv_banner.png (320x180, drawable + drawable-xhdpi) replaced with the
+revised export from `~/workspace/muse-app-logos/banners/`
+(banner-muse-gadget-shield-320x180.png). Verified: banner extracted from
+the built APK (both drawable entries) is pixel-identical to the new
+export (0 differing px); apksigner verify passed; build desktop checks
+pass. APK: muse-gadget-shield-prototype.apk, SHA-256 `4952eae1431c94b038ec34c3083d0616bbda1dca9343e8b6c7963eacfdd86ace`.
+Not installed by this handling (Shield install is a deliberate step);
+ready to install.
